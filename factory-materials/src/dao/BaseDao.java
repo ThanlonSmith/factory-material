@@ -18,12 +18,12 @@ public class BaseDao {
 //			本地数据库
 			String url = "jdbc:mysql://localhost:3306/factory_materials?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
 //			远程主机上的数据库
-			String url2 = "jdbc:mysql://47.102.145.225:3306/factory_materials?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
+			String url2 = "jdbc:mysql://xxx.xxx.xxxx.xxx:3306/factory_materials?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
 //			数据库用户名
-			String username = "lipeipei";
+			String username = "root";
 //			数据库密码
-			String password = "Lipeipei123456!";
-			conn = DriverManager.getConnection(url2, username, password);
+			String password = "123456";
+			conn = DriverManager.getConnection(url, username, password);
 		} catch (ClassNotFoundException e) {
 			System.out.println("加载驱动失败！");
 			e.printStackTrace();
