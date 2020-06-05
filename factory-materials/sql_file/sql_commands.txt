@@ -1,0 +1,66 @@
+创建数据库
+create database factory_materials default charset=utf8;
+创建管理员表
+create table admin (id int auto_increment, name varchar(255) not null, pwd varchar(255) not null, primary key(id) )engine=innodb charset utf8;
+插入2条管理员信息
+insert admin(name,pwd) values("thanlon","ea48576f30be1669971699c09ad05c94");
+insert admin(name,pwd) values("admin","ea48576f30be1669971699c09ad05c94");
+创建用户信息表
+create table user(id int auto_increment, name varchar(255) not null, pwd varchar(255) not null,email varchar(255),company varchar(255), primary key(id) )engine=innodb charset utf8;
+插入一条用户信息
+insert user(name,pwd) values("user","ea48576f30be1669971699c09ad05c94");
+创建仓库表
+create table godown(id int,material_number int , primary key(id) )engine=innodb charset utf8;
+创建仓库管理员表
+create godownKeeper(id int, name varchar(255),godown_id int, pwd varchar(255),mobile_number varchar(255),real_name varchar(255), primary key(id),foreigh key(id) references godown(id) )engine=innodb charset utf8;
+插入1条仓库管理员信息
+create table godown_keeper(id int, name varchar(255),godown_id int, pwd varchar(255),mobile_number varchar(255),real_name varchar(255), primary key(id),foreign key(id) references godown(id) )engine=innodb charset utf8;
+创建部门表
+create table department(id int auto_increment,name varchar(255), primary key(id) )engine=innodb charset utf8;
+插入2条部门信息
+insert department values(null,'仓库管理部');
+insert department values(null,'采购部');
+创建员工表
+create table employee(id int auto_increment, name varchar(255),depart_id int, pwd varchar(255),mobile_number varchar(255),real_name varchar(255), primary key(id),foreign key(depart_id) references department(id) )engine=innodb charset utf8;
+插入1条员工信息
+insert employee values(null,'liming','1','ea48576f30be1669971699c09ad05c94','17810102021','李明');
+insert employee values(null,'zhangxiao','1','ea48576f30be1669971699c09ad05c94','18610102023','张晓');
+物料表
+create table material(id int auto_increment, name varchar(255),per_price int,number int,godown_id int,applicant_id varchar(255),primary key (id));
+物料表添加关联订单处理人员和仓库的外按键
+alter table material add foreign key(godown_id) references godown(id);
+删除员工(订单处理人)表信息
+delete from employee;
+修改数据类型
+alter table material modify applicant_id int;
+添加员工(订单处理人)信息
+insert employee values(null,'liming','1','ea48576f30be1669971699c09ad05c94','17810102021','李明');
+insert employee values(null,'zhangxiao','1','ea48576f30be1669971699c09ad05c94','18610102023','张晓');
+修改物料表字段applicant_id为订单处理人
+alter table material change applicant_id handler_id int;
+物料表添加applicant_id字段
+alter table material add applicant_id int;
+物料表添加关联申请人外按键
+alter table material add foreign key(handler_id) references employee(id);
+alter table material add foreign key(applicant_id) references user(id);
+向仓库中插入数据
+insert godown values(1,180);
+删除仓库管理员关联仓库的外键
+alter table godown_keeper drop foreign key godown_keeper_ibfk_1;
+添加外键
+alter table godown_keeper add foreign key(godown_id) references godown(id);
+想仓库管理员表中插入数据
+insert godown_keeper values(100001,'keeper1',2,'ea48576f30be1669971699c09ad05c94','18767678978','刘好');
+创建订单表
+create table orders(id int auto_increment, aapplicant varchar(255), address varchar(255), mobile_nubmer varchar(11), others varchar(255),primary key(id))engine=innodb charset utf8;
+向仓库表中插入数据
+mysql> insert godown values(4,190);
+mysql> insert godown values(5,98);
+mysql> insert godown values(6,128);
+mysql> insert godown values(7,132);
+create table material_apply(id int auto_increment, name  varchar(255), address varchar(255), mobile_nubmer varchar(11), others varchar(255),primary key(id))engine=innodb charset utf8;
+create table material(id int auto_increment, name varchar(255),unit_price int,inventory int,number int,godown_id int, ware_id int,primary key (id));
+ alter table material add FOREIGN KEY(godown_id) references godown(id);
+alter table material drop ware_id;
+alter table material_apply add material_id int;
+insert material values(null,"物料8",90,40,1);
